@@ -27,6 +27,7 @@
     function preload ()
     {
         this.load.image('bg', 'images/background.jpg');
+        this.load.image('gun', 'images/shooter.png');
         this.load.image('ground', 'images/roll.png');
         this.load.image('poop', 'images/tile000.png');
         this.load.image('tpL', 'images/tpL0.png');
@@ -65,7 +66,7 @@
         this.physics.add.collider(player, platforms);
         player.setCollideWorldBounds(true);
 
-        tp = this.physics.add.sprite(500, 250, 'tpL');
+        tp = this.physics.add.sprite(550, 250, 'tpL');
         this.physics.add.collider(tp, platforms);
         this.physics.add.collider(player, tp, hitEnemy, null, this);
         tp.setCollideWorldBounds(true);
@@ -92,7 +93,8 @@
         {
             player.setVelocityY(-330);
         }
-        tp.setVelocityX(-160);
+        tp.setVelocityX(-100);
+
     }
     </script>
 
