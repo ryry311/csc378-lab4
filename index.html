@@ -28,6 +28,7 @@
     function preload ()
     {
         this.load.image('bg', 'images/background.jpg');
+        this.load.image('gun', 'images/shooter.png');
         this.load.image('ground', 'images/roll.png');
         this.load.image('poop', 'images/tile000.png');
     }
@@ -40,10 +41,13 @@
         platforms.create(400, 588, 'ground').setScale(8).refreshBody();
         
         player = this.physics.add.sprite(100, 250, 'poop');
+        gun = this.physics.add.sprite(135, 247, 'gun');
+        player.addChild(gun);
         player.body.setGravityY(300);
         player.setBounce(0.15);
         this.physics.add.collider(player, platforms);
-        //player.setCollideWorldBounds(true);
+        game.physics.enable(canoe, Phaser.Physics.Arcade);
+        player.setCollideWorldBounds(true);
 /*
         this.anims.create({
             key: 'left',
