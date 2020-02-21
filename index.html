@@ -31,6 +31,11 @@
         this.load.image('gun', 'images/shooter.png');
         this.load.image('ground', 'images/roll.png');
         this.load.image('poop', 'images/tile000.png');
+
+        for (let i = 0; i < 9; i++)
+        {
+            this.load.image('fartshot' + String(i), 'images/fart_shotL' + String(i) + '.png');
+        }
     }
 
     function create ()
@@ -46,7 +51,6 @@
         player.body.setGravityY(300);
         player.setBounce(0.15);
         this.physics.add.collider(player, platforms);
-        game.physics.enable(canoe, Phaser.Physics.Arcade);
         player.setCollideWorldBounds(true);
 /*
         this.anims.create({
@@ -89,6 +93,11 @@
         if (cursors.up.isDown && player.body.touching.down)
         {
             player.setVelocityY(-330);
+        }
+
+        if (cursors.spacebar.isDown)
+        {
+           this.physics.add.sprite(gun.x, gun.y, 'fart_shotL0.png');
         }
     }
     </script>
