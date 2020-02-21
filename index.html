@@ -32,52 +32,45 @@
         this.load.image('tpL', 'images/tpL0.png');
         this.load.image('tpR', 'images/tpR0.png');
         this.load.image('gun', 'images/shooter.png');
-       // this.scale.pageAlignHorizontally = true;
-        //this.scale.pageAlignVertically = true;
+        this.load.image('butt', 'images/butt.png');
         for (let i = 0; i < 9; i++)
          {
              this.load.image('fartshot' + String(i), 'images/fart_shotL' + String(i) + '.png');
          }
     }
 
+    function hitEnemy (player, bomb)
+    {
+        this.physics.pause();
+        let gameOverText = this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', { fontSize: '32px', fill: '#fff' });
+        gameOverText.setDepth(1);
+        player.setTint(0xff0000);
+
+        player.anims.play('turn');
+
+        gameOver = true;
+    }
+
     function create ()
     {
         this.add.image(400, 300, 'bg').setScale(4);
+        this.add.image(120, 50, 'butt').setScale(2);
 
         platforms = this.physics.add.staticGroup();
         platforms.create(400, 588, 'ground').setScale(8).refreshBody();
         
-        player = this.physics.add.sprite(100, 250, 'poop');
+        player = this.physics.add.sprite(100, 100, 'poop');
         player.body.setGravityY(300);
         player.setBounce(0.15);
         this.physics.add.collider(player, platforms);
         player.setCollideWorldBounds(true);
 
-        tp = this.physics.add.sprite(100, 250, 'tpL');
-        gun = this.physics.add.sprite(135, 247, 'gun');
-        player.addChild(gun);
-        //this.game.camera.follow(this.player);
-/*
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('poop', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
+        tp = this.physics.add.sprite(500, 250, 'tpL');
+        this.physics.add.collider(tp, platforms);
+        this.physics.add.collider(player, tp, hitEnemy, null, this);
+        tp.setCollideWorldBounds(true);
 
-        this.anims.create({
-            key: 'turn',
-            frames: [ { key: 'poop', frame: 4 } ],
-            frameRate: 20
-        });
-
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('poop', { start: 5, end: 8 }),
-            frameRate: 10,
-            repeat: -1
-        });
-    */}
+    }
 
     function update ()
     {
@@ -99,10 +92,7 @@
         {
             player.setVelocityY(-330);
         }
-        if (cursors.spacebar.isDown)
-        {
-           this.physics.add.sprite(gun.x, gun.y, 'fart_shotL0.png');
-        }
+        tp.setVelocityX(-160);
     }
     </script>
 
