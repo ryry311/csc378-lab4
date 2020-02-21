@@ -22,7 +22,6 @@
             update: update
         }
     };
-
     var game = new Phaser.Game(config);
 
     function preload ()
@@ -30,6 +29,15 @@
         this.load.image('bg', 'images/background.jpg');
         this.load.image('ground', 'images/roll.png');
         this.load.image('poop', 'images/tile000.png');
+        this.load.image('tpL', 'images/tpL0.png');
+        this.load.image('tpR', 'images/tpR0.png');
+        this.load.image('gun', 'images/shooter.png');
+       // this.scale.pageAlignHorizontally = true;
+        //this.scale.pageAlignVertically = true;
+        for (let i = 0; i < 9; i++)
+         {
+             this.load.image('fartshot' + String(i), 'images/fart_shotL' + String(i) + '.png');
+         }
     }
 
     function create ()
@@ -43,7 +51,12 @@
         player.body.setGravityY(300);
         player.setBounce(0.15);
         this.physics.add.collider(player, platforms);
-        //player.setCollideWorldBounds(true);
+        player.setCollideWorldBounds(true);
+
+        tp = this.physics.add.sprite(100, 250, 'tpL');
+        gun = this.physics.add.sprite(135, 247, 'gun');
+        player.addChild(gun);
+        //this.game.camera.follow(this.player);
 /*
         this.anims.create({
             key: 'left',
@@ -85,6 +98,10 @@
         if (cursors.up.isDown && player.body.touching.down)
         {
             player.setVelocityY(-330);
+        }
+        if (cursors.spacebar.isDown)
+        {
+           this.physics.add.sprite(gun.x, gun.y, 'fart_shotL0.png');
         }
     }
     </script>
